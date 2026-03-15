@@ -17,7 +17,7 @@ Arduino sketch for the **Waveshare ESP32-P4-Module-DEV-KIT** that:
 | RAM   | 32 MB PSRAM                                                                                            |
 | Flash | 16 MB NOR                                                                                              |
 | ETH   | Onboard RJ45, IP101GRI PHY, 100 Mbps RMII                                                             |
-| WiFi  | ESP32-C6 companion chip (SDIO) – WiFi 6 / Bluetooth 5                                                 |
+| WiFi  | ESP32-C6 companion chip (SDIO) – WiFi 6 / Bluetooth 5 / ESP-NOW (requires C6 firmware update – see note below) |
 
 ### Ethernet PHY pin mapping
 
@@ -113,6 +113,23 @@ It also appears in every subsequent heartbeat line:
   Link Speed: 100 Mbps
   Full Duplex: yes
 ```
+
+---
+
+## Using ESP-NOW on This Board
+
+The onboard **ESP32-C6** provides all wireless connectivity for the ESP32-P4
+via SDIO.  The factory C6 firmware **does not include ESP-NOW support**, so
+standard `esp_now_init()` calls will fail until the C6 is updated.
+
+See the companion project **[`esp32-p4-espnow/`](../esp32-p4-espnow/)** for:
+
+- A complete two-step flash guide (update the C6, then flash the P4 sketch).
+- An Arduino ESP-NOW home base sketch compatible with the sensor nodes in
+  [`esp-now-sensor-network/`](../esp-now-sensor-network/).
+
+> The C6 firmware update is a **one-time operation** that persists across all
+> subsequent P4 re-flashes.
 
 ---
 
